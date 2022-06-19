@@ -15,10 +15,10 @@ sap.ui.define([
 
         }
         
-        var App = Controller.extend("mr.rrhh.controller.App", {});
+        var Orders = Controller.extend("mr.rrhh.controller.Orders", {});
 
-        App.prototype.onInit = onInit;
+        Orders.prototype.onInit = onInit;
 
-        return App;
+        return Orders;
 
     });

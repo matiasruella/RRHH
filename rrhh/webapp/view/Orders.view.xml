@@ -1,0 +1,12 @@
+<mvc:View controllerName="mr.rrhh.controller.Orders"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns="sap.m">
+
+    <Page >
+
+        <Label text="Sign Orders"></Label>
+
+    </Page>
+
+</mvc:View>

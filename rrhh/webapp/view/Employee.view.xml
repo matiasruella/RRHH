@@ -1,0 +1,12 @@
+<mvc:View controllerName="mr.rrhh.controller.Employee"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns="sap.m">
+
+    <Page >
+
+        <Label text="Create Employee"></Label>
+
+    </Page>
+
+</mvc:View>

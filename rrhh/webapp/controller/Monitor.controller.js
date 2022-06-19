@@ -15,10 +15,10 @@ sap.ui.define([
 
         }
         
-        var App = Controller.extend("mr.rrhh.controller.App", {});
+        var Monitor = Controller.extend("mr.rrhh.controller.Monitor", {});
 
-        App.prototype.onInit = onInit;
+        Monitor.prototype.onInit = onInit;
 
-        return App;
+        return Monitor;
 
     });

@@ -17,11 +17,10 @@
     },
     "dataSources": {
       "ZEMPLOYEES_SRV": {
-        "uri": "/sap/opu/odata/ZEMPLOYEES_SRV/",
+        "uri": "/sap/opu/odata/sap/ZEMPLOYEES_SRV/",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
       }
@@ -102,28 +101,71 @@
       },
       "routes": [
         {
-          "name": "RouteApp",
-          "pattern": ":?query:",
+          "name": "RouteMain",
+          "pattern": "",
           "target": [
-            "TargetApp"
+            "TargetMain"
           ]
+        },
+        {
+            "name":"RouteEmployee",
+            "pattern":"Employee",
+            "target":[
+                "TargetEmployee"
+            ]
+        },
+        {
+            "name":"RouteMonitor",
+            "pattern":"Monitor",
+            "target":[
+                "TargetMonitor"
+            ]
+        },
+        {
+            "name":"RouteOrders",
+            "pattern":"Orders",
+            "target":[
+                "TargetOrders"
+            ]
         }
       ],
       "targets": {
-        "TargetApp": {
+        "TargetMain": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "App",
-          "viewName": "App"
+          "viewId": "Main",
+          "viewName": "Main"
+        },
+        "TargetEmployee": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Employee",
+          "viewName": "Employee"
+        },
+        "TargetMonitor": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Monitor",
+          "viewName": "Monitor"
+        },
+        "TargetOrders": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Orders",
+          "viewName": "Orders"
         }
+
       }
     },
     "rootView": {
       "viewName": "mr.rrhh.view.App",
       "type": "XML",
       "async": true,
-      "id": "App"
+      "id": "app"
     }
   }
 }

@@ -1,0 +1,60 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" controllerName="mr.rrhh.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns="sap.m"> 
+
+   <Page title="{i18n>mainPageTitle}"  showHeader="true">
+    
+        <Panel headerText="{i18n>mainPanelEmployees}" 
+               expandable="true"
+               expanded="true">
+
+                
+            <GenericTile id="Employee"
+                         class="sapUiTinyMarginBegin sapUiTinyMarginTop" 
+                         press="onTilePress"
+                         headerImage="sap-icon://add-employee">                 
+                
+                <TileContent  footer="{i18n>mainTileCreate}" />
+
+            </GenericTile>
+
+            <GenericTile id="Monitor"
+                         class="sapUiTinyMarginBegin sapUiTinyMarginTop" 
+                         press="onTilePress"
+                         headerImage="sap-icon://employee-lookup">
+
+                <TileContent footer="{i18n>mainTileShow}">
+                    
+			        <NumericContent id="employeeCount" value="0" withMargin="false" valueColor="Neutral"/>
+
+                </TileContent>
+
+            </GenericTile>            
+        
+        
+        </Panel>
+        
+        <Panel headerText="{i18n>mainPanelOrders}" 
+               expandable="true"
+               expanded="true">
+        
+
+            <GenericTile id="Orders"
+                         class="sapUiTinyMarginBegin sapUiTinyMarginTop"
+                         press="onTilePress"
+                         headerImage="sap-icon://signature">
+            
+                <TileContent footer="{i18n>mainTileOrder}" > 
+                    
+			        <NumericContent value="12" withMargin="false" valueColor="Error"/>
+                
+                </TileContent>
+
+            </GenericTile>        
+        
+        </Panel>
+
+   </Page>
+
+</mvc:View>
