@@ -11,22 +11,23 @@ sap.ui.define([
         "use strict";
 
         /**
-         * Función del ciclo de vida onInit
+         * Función para resetear el wizard cada vez que se entra a la pagina
+         * @param {*} oEvent 
          */
-        function onInit() {
+        function _onObjectMatched(oEvent){
 
-       
-        }
-
-
-        /**
-         * Función ciclo de vida onBeforeRendering
-         */
-        function onBeforeRendering(){
-            
             //Obtenemos la cantidad de empleados para informar al monitor
             Employee.count(this,onCountSuccess.bind(this))
-            
+        }
+
+        /**
+         * Función ciclo de vida onInit
+         */
+        function onInit(){  
+
+            //Obtenemos el router y le definimos un object matched a la routa del empleado
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("RouteMain").attachPatternMatched(_onObjectMatched,this);
         }
 
 
@@ -75,7 +76,6 @@ sap.ui.define([
         var Main = Controller.extend("mr.rrhh.controller.Main", {});
 
         Main.prototype.onInit = onInit;
-        Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onTilePress = onTilePress;
         Main.prototype.onCountSuccess = onCountSuccess;
         

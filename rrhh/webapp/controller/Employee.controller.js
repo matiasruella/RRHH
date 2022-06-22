@@ -14,7 +14,24 @@ sap.ui.define([
      */
     function (Controller, JSONModel, MessageBox, Employee) {
         "use strict";
+        
+        /**
+         * Función para resetear el wizard cada vez que se entra a la pagina
+         * @param {*} oEvent 
+         */
+        function _onObjectMatched(oEvent){
+            this.resetWizard();
+        }
 
+        /**
+         * Función ciclo de vida onInit
+         */
+        function onInit(){  
+
+            //Obtenemos el router y le definimos un object matched a la routa del empleado
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("RouteEmployee").attachPatternMatched(_onObjectMatched,this);
+        }
         /**
          * Función ciclo de vida onBeforeRendering
          */
@@ -255,17 +272,21 @@ sap.ui.define([
                 emphasizedAction: MessageBox.Action.OK,
                 onClose: function (result) {
                     if (result === 'OK') {
-                        
-                        resetWizard();
-                        backToMenu();
+
+                        this.backToMenu();
 
                     }
                 }.bind(this)
             });
         }
 
+
+        /**
+         * Reinicia el wizard
+         */
         function resetWizard() {
 
+            if (this)
             //Reiniciamos el wizard por si se vuelve atras.
             this._wizardEmployee.discardProgress(this._wizardStep1);
 
@@ -277,6 +298,9 @@ sap.ui.define([
 
         }
 
+        /**
+         * Vuelve al menu principal.
+         */
         function backToMenu() {
 
             //Damos un back por si se encuentra en la pagina de revisión
@@ -336,7 +360,6 @@ sap.ui.define([
 
             MessageBox.success(this._oResourceModel.getText("employeeWizardCreateSuccess", [data.FirstName, data.LastName, data.EmployeeId]), {
                 onClose: function (result) {
-                    resetWizard.bind(this)();
                     backToMenu.bind(this)();
 
                 }.bind(this)
@@ -351,7 +374,6 @@ sap.ui.define([
         function onCreateError(error) {
             MessageBox.error(this._oResourceModel.getText("employeeWizardCreateError"), {
                 onClose: function (result) {
-                    resetWizard.bind(this)();
                     backToMenu.bind(this)();
 
                 }.bind(this)
@@ -403,6 +425,7 @@ sap.ui.define([
 
         var EmployeeController = Controller.extend("mr.rrhh.controller.Employee", {});
 
+        EmployeeController.prototype.onInit = onInit;
         EmployeeController.prototype.onTypePress = onTypePress
         EmployeeController.prototype.onBeforeRendering = onBeforeRendering;
         EmployeeController.prototype.onValidateEmployee = onValidateEmployee;
