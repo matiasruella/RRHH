@@ -1,0 +1,27 @@
+{
+    "Salaries":{
+
+        "0":{
+            "position":"Interno",
+            "minSalary":12000,
+            "maxSalary":80000,
+            "defaultSalary":24000,
+            "stepSalary":1000
+        },
+        "1":{
+            "position":"Autónomo",
+            "minSalary":100,
+            "maxSalary":2000,
+            "defaultSalary":400,
+            "stepSalary":100
+        },
+        "2":{
+            "position":"Gerente",
+            "minSalary":50000,
+            "maxSalary":200000,
+            "defaultSalary":70000,
+            "stepSalary":1000
+        }
+        
+    }
+}

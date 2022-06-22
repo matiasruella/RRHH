@@ -63,10 +63,9 @@ sap.ui.define([
             if (oRouter.getRoute(_route)){
 
                 //Si existe, navegamos a esa vista.
-                oRouter.navTo(_route,true);
+                 oRouter.navTo(_route,true);
+
             
-            }else{
-    
             }
         }
 
@@ -79,8 +78,7 @@ sap.ui.define([
         Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onTilePress = onTilePress;
         Main.prototype.onCountSuccess = onCountSuccess;
-       // Main.prototype.onSuccess = onSuccess;
-
+        
         return Main;
 
 

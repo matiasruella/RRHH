@@ -1,12 +1,223 @@
 <mvc:View controllerName="mr.rrhh.controller.Employee"
     xmlns:mvc="sap.ui.core.mvc" 
     displayBlock="true"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
     xmlns="sap.m">
 
-    <Page >
+    <NavContainer id="wizardNavContainer">
+            <pages>
 
-        <Label text="Create Employee"></Label>
+                <Page   id="wizardContentPage"
+                        title="{i18n>employeeTitle}"
+                        showHeader="true">
+                                   
+                    <content>                         
 
-    </Page>
+                        <Wizard id="employeeWizard" 
+                                complete="onWizardComplete"
+                                class="sapUiResponsivePadding--header sapUiResponsivePadding--content" >
+
+                                <WizardStep id="wizardStep1"
+                                            title="{i18n>employeeWizardStep1Tittle}"
+                                            validated="false" >
+
+                                            <MessageStrip class="sapUiSmallMarginBottom" 
+                                                          text="{i18n>employeeWizardStep1Message}"
+                                                          showIcon="true" />
+
+                                            <HBox id="employeeButtonsStep1"
+                                                  alignItems="Center"
+                                                  justifyContent="Center"
+                                                  width="100%">
+
+                                                <Button id="0" press="onTypePress" text="{i18n>employeeWizardStep1Button0}" class="sapUiSmallMarginEnd" />
+                                                <Button id="1" press="onTypePress" text="{i18n>employeeWizardStep1Button1}" class="sapUiSmallMarginEnd" />
+                                                <Button id="2" press="onTypePress" text="{i18n>employeeWizardStep1Button2}" class="sapUiSmallMarginEnd"/>
+                                                    
+                                            </HBox>
+                                                                                    
+                                </WizardStep>
+
+
+                                <WizardStep id="wizardStep2"
+                                            title="{i18n>employeeWizardStep2Tittle}"
+                                            validated="false" >
+
+                                    <MessageStrip class="sapUiSmallMarginBottom" 
+                                                  text="{i18n>employeeWizardStep2Message}"
+                                                  showIcon="true" />
+
+                                    <f:SimpleForm editable="true">
+
+                                        <Label  text="{i18n>employeeWizardStep2LabelName}" 
+                                                required="true"/>
+                                   
+                                        <Input  id="Name"
+                                                value="{/name}" 
+                                                change="onValidateEmployee"
+                                                valueState="{/nameState}"/>
+
+                                        <Label  text="{i18n>employeeWizardStep2LabelLastName}" 
+                                                required="true"/>
+                                        
+                                        <Input  value="{/lastName}" 
+                                                change="onValidateEmployee"
+                                                valueState="{/lastNameState}"/>
+
+                                        <Label  text="{= ${/type} === 0 || ${/type} === 2  ? ${i18n>employeeWizardStep2LabelDNI} : ${i18n>employeeWizardStep2LabelCIF} }" 
+                                                required="true"/>
+                                                
+                                        <Input  value="{/dni}" 
+                                                required="true"
+                                                change="onValidateEmployee"
+                                                valueState="{/dniState}"/>
+
+                                        <Label  text="{= ${/type} === 0 || ${/type} === 2  ? ${i18n>employeeWizardStep2LabelSalary} : ${i18n>employeeWizardStep2LabelSalary2} }"/>
+                                        
+                                        <Slider id="Salary"
+                                                progress="false"
+                                                inputsAsTooltips="true" 
+                                                showAdvancedTooltip="true" 
+                                                showHandleTooltip="true" 
+                                                value="{/salary}" 
+                                                enableTickmarks="true"  
+                                                width="100%"/>
+
+                                        <Label  text="{i18n>employeeWizardStep2LabelDate}" required="true"/>
+                                        
+                                        <DatePicker id="dateEmployee"
+                                                    dateValue="{/date}" 
+                                                    valueState="{/dateState}"
+                                                    class="sapUiSmallMarginBottom"
+                                                    change="onValidateEmployee"/>
+
+                                    </f:SimpleForm>
+                                                                                    
+                                </WizardStep>
+
+
+                                <WizardStep id="wizardStep3"
+                                            title="{i18n>employeeWizardStep3Tittle}"
+                                            validated="true">
+
+                                            <MessageStrip   class="sapUiSmallMarginBottom" 
+                                                            text="{i18n>employeeWizardStep3Message}"
+                                                            showIcon="true" />
+
+                                            <Label text="{i18n>employeeWizardStep3Comments}"/>
+                                            <TextArea value="{/comments}" width="100%"></TextArea>
+
+                                            <UploadCollection   id="employeeFiles" 
+                                                                maximumFilenameLength="55"
+                                                                maximumFileSize="10"
+                                                                multiple="true"
+                                                                sameFilenameAllowed="true"
+                                                                instantUpload="false"
+                                                                uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                                                change="onFileChange"
+                                                                uploadComplete="onFileUploadComplete"
+                                                                beforeUploadStarts="onFileBeforeUpload"
+                                                                fileDeleted="onFileDeleted"/>
+                                                                                    
+                                </WizardStep>
+
+                            </Wizard>
+
+                        </content>  
+
+					    <footer>
+						    <OverflowToolbar>
+							    <ToolbarSpacer/>
+							    <Button text="{i18n>employeeButtonCancel}" press="onCancel"/>
+						    </OverflowToolbar>
+					    </footer>
+                    
+                    </Page>
+
+                    <Page title="Revisión empleado: {/name} {/lastName}" id="wizardReviewPage">
+
+                        <content>
+                            <f:SimpleForm
+                                    title="1. {i18n>employeeWizardStep1Tittle}"
+                                    minWidth="1024"
+                                    editable="false"
+                                    layout="ResponsiveGridLayout">
+                                <f:content>
+                                    <Label text="{i18n>employeeWizardStep1Type}"/>
+                                    <Text text="{/type}"/>
+                                    <Link id="edit_0" press="onEditLink" text="{i18n>edit}" />
+                                </f:content>
+
+                            </f:SimpleForm>
+
+                            <f:SimpleForm
+                                    title="2.  {i18n>employeeWizardStep2Tittle}"
+                                    minWidth="1024"
+                                    editable="false"
+                                    layout="ResponsiveGridLayout">
+                                <f:content>
+                                    <Label text="{i18n>employeeWizardStep2LabelName}"/>
+                                    <Text text="{/name}"/>
+
+
+                                    <Label text="{i18n>employeeWizardStep2LabelLastName}"/>
+                                    <Text text="{/lastName}"/>
+
+
+                                    <Label text="{= ${/type} === 0 || ${/type} === 2  ? ${i18n>employeeWizardStep2LabelDNI} : ${i18n>employeeWizardStep2LabelCIF} }"/>
+                                    <Text text="{/dni}"/>
+
+
+                                    <Label text="{= ${/type} === 0 || ${/type} === 2  ? ${i18n>employeeWizardStep2LabelSalary} : ${i18n>employeeWizardStep2LabelSalary2} }"/>
+                                    <Text text="{/salary}"/>
+
+                                    <Label text="{i18n>employeeWizardStep2LabelDate}"/>
+                                    <Text text="{/date}"/>
+
+                                    <Link id="edit_1" press="onEditLink"  text="{i18n>edit}"  />
+							    </f:content>
+                                
+						    </f:SimpleForm>
+
+                            <f:SimpleForm
+								title="3.  {i18n>employeeWizardStep3Tittle}"
+								minWidth="1024"
+								editable="false"
+								layout="ResponsiveGridLayout">
+							    <f:content>
+                                    <Label text="{i18n>employeeWizardStep3Comments}"/>
+                                    <Text text="{/comments}"/>
+                                    
+                                    <Label text="{i18n>employeeWizardStep3Documents}"/>
+                                    <Text text="{/filesCount} {i18n>employeeWizardStep3Files}"/>
+
+                                    <Label/>
+                                    <List items="{/files}" >
+                                        <items>
+                                            <StandardListItem title="{name}" />
+                                        </items>
+                                    </List>
+
+                                    <Link id="edit_2" press="onEditLink" text="{i18n>edit}" />
+                                </f:content>
+						</f:SimpleForm>
+					</content>
+                    
+					<footer>
+						<Bar>
+							<contentRight>
+								<Button text="{i18n>employeeButtonSave}" press="onSave"/>
+								<Button text="{i18n>employeeButtonCancel}" press="onCancel"/>
+							</contentRight>
+						</Bar>
+					</footer>                    
+                    
+                    </Page>
+
+
+            </pages>
+
+    </NavContainer>
 
 </mvc:View>
