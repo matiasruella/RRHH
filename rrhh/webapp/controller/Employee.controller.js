@@ -3,16 +3,18 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "mr/rrhh/model/Employee"
+    "mr/rrhh/model/Employee",
+    "mr/rrhh/model/Formatter"
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel  
      * @param {typeof sap.u.MessageBox} MessageBox
-     * @param {typeof "mr.rrhh.model.Employee"} Employee
+     * @param {typeof mr.rrhh.model.Employee} Employee
+     * @param {typeof mr.rrhh.model.Formatter} Formatter
      */
-    function (Controller, JSONModel, MessageBox, Employee) {
+    function (Controller, JSONModel, MessageBox, Employee,Formatter) {
         "use strict";
         
         /**
@@ -334,7 +336,10 @@ sap.ui.define([
                         [
                             {
                                 Amount: parseFloat(_employeeData.salary).toString(),
-                                Waers: "EUR"
+                                Waers: "EUR",
+                                Comments:this._oResourceModel.getText("employeeWizardStep2CreationComment"),
+                                CreationDate:_employeeData.date
+
 
                             }
                         ]
@@ -372,6 +377,7 @@ sap.ui.define([
          * @param {*} data 
          */
         function onCreateError(error) {
+            console.log("ERROR PA")
             MessageBox.error(this._oResourceModel.getText("employeeWizardCreateError"), {
                 onClose: function (result) {
                     backToMenu.bind(this)();
@@ -439,6 +445,7 @@ sap.ui.define([
         EmployeeController.prototype.resetWizard = resetWizard;
         EmployeeController.prototype.onFileBeforeUpload = onFileBeforeUpload;
         EmployeeController.prototype.onFileChange = onFileChange;
+        EmployeeController.prototype.Formatter = Formatter;
 
         return EmployeeController;
 

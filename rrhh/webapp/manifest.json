@@ -120,13 +120,6 @@
             "target":[
                 "TargetMonitor"
             ]
-        },
-        {
-            "name":"RouteOrders",
-            "pattern":"Orders",
-            "target":[
-                "TargetOrders"
-            ]
         }
       ],
       "targets": {
@@ -150,13 +143,6 @@
           "clearControlAggregation": false,
           "viewId": "Monitor",
           "viewName": "Monitor"
-        },
-        "TargetOrders": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Orders",
-          "viewName": "Orders"
         }
 
       }

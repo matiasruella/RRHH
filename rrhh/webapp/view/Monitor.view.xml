@@ -1,12 +1,172 @@
-<mvc:View controllerName="mr.rrhh.controller.Monitor"
+<mvc:View xmlns:core="sap.ui.core" controllerName="mr.rrhh.controller.Monitor"
     xmlns:mvc="sap.ui.core.mvc" 
     displayBlock="true"
-    xmlns="sap.m">
+	xmlns:layout="sap.ui.layout"
+    xmlns:u="sap.uxap"
+    xmlns="sap.m"
+    xmlns:c="sap.suite.ui.commons">
 
-    <Page >
+	<SplitApp 
+		id="detailsEmployee"
+		initialDetail="detail"
+		initialMaster="master">
 
-        <Label text="Show Employee"></Label>
+		<detailPages >
+			<Page 
+				id="employeeDetail"
+				title="{i18n>monitorDetailEmployeeTitle}"
+				backgroundDesign= "Solid">
 
-    </Page>
+                <content>
+
+                    <Panel id="employeeDataPanel" visible="false">
+
+			            <FlexBox alignItems="Center"> 
+
+				            <Avatar src="{= ${employeeModel>Type}==='0' ? 'sap-icon://employee-pane' : ${employeeModel>Type}==='1' ? 'sap-icon://employee' : 'sap-icon://leads' }"
+                                    backgroundColor="Transparent" 
+                                    displaySize="XL"
+                                    class="sapUiTinyMarginEnd"/>
+
+                            <VBox  displayInline="true">
+
+                                <Label text="{employeeModel>FirstName} {employeeModel>LastName}" class="headerName" />
+                                
+                                <Text text="{employeeModel>Dni}" class="smallFont" />
+                            
+                            </VBox>
+
+                        </FlexBox>
+
+                        <FlexBox height="65px"  justifyContent="SpaceBetween" alignItems="Center" >
+                
+                            <items >
+                 
+                                <VBox>
+
+                                    <Text text="{i18n>employeeDetailTextDate} {path: 'employeeModel>CreationDate' ,type: 'sap.ui.model.type.Date', formatOptions: { pattern: ' dd MMM yyyy', UTC: true } }" class="boldText"/>
+                                    <Text text="{i18n>employeeDetailTextType} { path: 'employeeModel>Type' , formatter:'.Formatter.getType' }" class="boldText"/>
+
+                                </VBox>
+                                <ToolbarSpacer/>
+
+                                <VBox>
+                                    
+                                    <Text text="{i18n>employeeDetailTextComments}" class="boldText sapUiTinyMarginEnd"/>
+                                    <Text text="{employeeModel>Comments}"/>
+                                
+                                </VBox>
+                 
+                            </items>
+
+			            </FlexBox>
+
+                    </Panel>
+                
+
+                    <Panel id="employeeInfoPanel" visible="false">
+                
+                       <IconTabBar id="idIconTabBar"
+		                           select=".onFilterSelect"
+		                           class="sapUiResponsiveContentPadding">
+		                
+                            <items>
+			
+			                    <IconTabFilter icon="sap-icon://attachment"
+				                               text="{i18n>iconTabFileText}"> 
+
+                                   <UploadCollection
+                                        id="UploadCollection"
+                                        maximumFilenameLength="55"
+                                        maximumFileSize="10"
+                                        multiple="true"
+                                        sameFilenameAllowed="true"
+                                        instantUpload="true"
+                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                        change="onFileChange"
+                                        uploadComplete="onFileUploadComplete"
+                                        beforeUploadStarts="onFileBeforeUpload"
+                                        fileDeleted="onFileDeleted"/> 
+
+                                </IconTabFilter>
+                
+			                    <IconTabFilter icon="sap-icon://money-bills"
+				                               text="{i18n>iconTabHistoryText}">
+
+                                    <c:Timeline id="idTimeline"
+                                              enableDoubleSided="true"
+                                              groupBy="CreationDate"
+                                              enableScroll="false"
+                                              showHeaderBar="false"
+                                              groupByType="Year"
+                                              sortOldestFirst="true"
+                                              height="100%"
+                                              growingThreshold="0"
+                                              content="{employeeModel>UserToSalary}">
+                                   
+                                         <c:TimelineItem  id="idTemplateItem"
+                                                        dateTime="{employeeModel>CreationDate}"                                                        
+                                                        title="{parts:[{path:'employeeModel>Amount'},{path:'employeeModel>Waers'}],type: 'sap.ui.model.type.Currency',formatOptions: {showMeasure: false}}"
+                                                        status="{= ${employeeModel>Comments}==='Alta de empleado' ? 'None' : 'Success' }"
+                                                        text="{employeeModel>Comments}"
+                                                        icon="{= ${employeeModel>Comments}==='Alta de empleado' ? 'sap-icon://decision' : 'sap-icon://drill-up' }">
+                                        </c:TimelineItem>
+                                        </c:Timeline>
+                                                
+                                </IconTabFilter>
+		   
+                            </items>
+                
+                        </IconTabBar>
+                
+                    </Panel>
+
+                    <VBox id="employeeSelectPanel" 
+                          visible="true" 
+                          alignItems="Center"
+                          justifyContent="Center" 
+                          height="100%">
+
+                            <Label  text="{i18n>employeeSelectText}" />
+                    </VBox>
+
+
+                </content>
+
+					<footer>
+						<Bar id="employeeFooterBar"
+                            visible="false">
+							<contentRight>
+								<Button text="{i18n>employeeFooterBarAdvancement}" press="onAdvancementEmployee"/>
+								<Button text="{i18n>employeeFooterBarDelete}" press="onDeleteEmployee"/>
+							</contentRight>
+						</Bar>
+					</footer>       
+            
+            </Page>
+
+		</detailPages>
+
+		<masterPages>
+			<Page
+				id="employeeListPage"
+				backgroundDesign= "List"
+				showHeader="false">
+
+                <Toolbar >
+                    <Button icon="sap-icon://nav-back" press="onNavBack" />
+
+
+                      <SearchField  search="onSearch" liveChange="onSearch" width="100%" />      
+
+                </Toolbar>           
+
+				<List id="employeeList" itemPress="onShowEmployee">
+       
+				</List>
+                
+			</Page>
+		</masterPages>
+	</SplitApp>
 
 </mvc:View>

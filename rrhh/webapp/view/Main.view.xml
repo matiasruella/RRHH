@@ -47,7 +47,6 @@
             
                 <TileContent footer="{i18n>mainTileOrder}" > 
                     
-			        <NumericContent value="12" withMargin="false" valueColor="Error"/>
                 
                 </TileContent>
 

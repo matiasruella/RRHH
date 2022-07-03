@@ -81,8 +81,10 @@
                                                 showAdvancedTooltip="true" 
                                                 showHandleTooltip="true" 
                                                 value="{/salary}" 
-                                                enableTickmarks="true"  
-                                                width="100%"/>
+                                                enableTickmarks="true"
+                                                width="100%">
+                                                <ResponsiveScale tickmarksBetweenLabels="100"/>
+                                                </Slider>
 
                                         <Label  text="{i18n>employeeWizardStep2LabelDate}" required="true"/>
                                         
@@ -107,6 +109,7 @@
 
                                             <Label text="{i18n>employeeWizardStep3Comments}"/>
                                             <TextArea value="{/comments}" width="100%"></TextArea>
+
 
                                             <UploadCollection   id="employeeFiles" 
                                                                 maximumFilenameLength="55"
@@ -135,7 +138,7 @@
                     
                     </Page>
 
-                    <Page title="Revisión empleado: {/name} {/lastName}" id="wizardReviewPage">
+                    <Page title="{i18n>employeeReviewPage} {/name} {/lastName}" id="wizardReviewPage">
 
                         <content>
                             <f:SimpleForm
@@ -145,7 +148,7 @@
                                     layout="ResponsiveGridLayout">
                                 <f:content>
                                     <Label text="{i18n>employeeWizardStep1Type}"/>
-                                    <Text text="{/type}"/>
+                                    <Text text="{ path: '/type' , formatter:'.Formatter.getType' }"/>
                                     <Link id="edit_0" press="onEditLink" text="{i18n>edit}" />
                                 </f:content>
 
@@ -170,7 +173,7 @@
 
 
                                     <Label text="{= ${/type} === 0 || ${/type} === 2  ? ${i18n>employeeWizardStep2LabelSalary} : ${i18n>employeeWizardStep2LabelSalary2} }"/>
-                                    <Text text="{/salary}"/>
+                                    <Text text="{parts:[{path:'/salary'},{path:'EUR'}],type: 'sap.ui.model.type.Currency',formatOptions: {showMeasure: false}}"/>
 
                                     <Label text="{i18n>employeeWizardStep2LabelDate}"/>
                                     <Text text="{/date}"/>
